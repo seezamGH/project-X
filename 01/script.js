@@ -8,12 +8,14 @@ function init()
 function get_text()
 {
   fetch("text.data")
-    .then(response => response.text())
     .then(get_text_onok)
     .catch(error => console.log(error))
 }
 
-function get_text_onok(data)
+async function get_text_onok(resp)
 {
+	var data;
+
+    data = await resp.text();
     document.body.textContent = data;
 }
