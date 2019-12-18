@@ -1,9 +1,21 @@
-document.addEventListener('DOMContentLoaded', getText)
+document.addEventListener("DOMContentLoaded", init)
 
-function getText() {
+function init()
+{
+  get_text();
+}
+
+function get_text()
+{
   fetch("text.data")
-    .then(response => response.text())
-    .then(data => document.body.textContent = data)
+    .then(get_text_onok)
     .catch(error => console.log(error))
 }
 
+async function get_text_onok(resp)
+{
+	var data;
+
+    data = await resp.text();
+    document.body.textContent = data;
+}
