@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", getText)
+document.addEventListener("DOMContentLoaded", init)
 
-function getText()
+function init()
 {
   fetch("text.data")
     .then(response => response.text())
