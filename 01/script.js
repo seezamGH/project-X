@@ -1,18 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', getText)
 
-  const url = './text.data'
-
-  fetch(url)
+function getText() {
+  fetch("text.data")
     .then(response => response.text())
-    .then(data => {
-
-      //вставить как html
-      document.body.innerHTML = data
-
-      //вставить как простой текст
-      //document.body.textContent = JSON.stringify(data)
-    })
+    .then(data => document.body.textContent = data)
     .catch(error => console.log(error))
-})
+}
 
-/* как вставить строку с переносами не знаю */
