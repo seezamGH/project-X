@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', getText)
+document.addEventListener("DOMContentLoaded", getText)
 
 function getText() {
   fetch("text.data")
