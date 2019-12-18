@@ -9,6 +9,11 @@ function get_text()
 {
   fetch("text.data")
     .then(response => response.text())
-    .then(data => document.body.textContent = data)
+    .then(get_text_onok)
     .catch(error => console.log(error))
+}
+
+function get_text_onok(data)
+{
+    document.body.textContent = data;
 }
