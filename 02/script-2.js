@@ -76,6 +76,7 @@ function posts_show()
 		el.textContent = posts.p[i];
 		document.body.appendChild(el);
 	}
+	console.log(posts)
 }
 
 
