@@ -3,50 +3,45 @@
 document.addEventListener("DOMContentLoaded", init)
 
 function init() {
-  getPostsList("posts.list")
-    .then(getPostsData)
-    .then(getAll)
-    .then(printResult)
-    .catch(error => console.log(error))
+  fetch("posts.list")
+    .then(loadPosts)
+    .catch(error => {
+      console.log("Ошибка загрузки списка сообщений: ", error)
+    })
 }
 
-async function getAll(arr) {
-  const result = await Promise.all([...arr])
-  return result
-}
-
-async function getData(url) {
-  const response = await fetch(url)
+async function loadPosts(response) {
   const data = await response.text()
-  //console.log(`Data => [${url}]`, data)
-  return data
+  const postsList = data.trimEnd().split("\n")
+
+  // if (postsList[postsList.length - 1] == "")
+  // postsList.pop()
+
+ // console.log(postsList)
+
+  for (let i = 0; i < postsList.length; i++) {
+    loadPost(postsList[i])
+  }
+  //console.log(data)
 }
 
-async function getPostsList(url) {
-  const list = await getData(url)
-  //console.log('getPostsList', list)
-  return list.split('\n')
+function loadPost(postID) {
+  fetch(postID + ".post")
+    .then(res => {
+      if(!res.ok){
+        throw new Error(`Проверить наличие файла [${postID}.post]`)
+      }
+      return res.text()
+    })
+    .then(printResult)
+    .catch(error => {
+      console.log("Ошибка загрузки поста ", error)
+    })
 }
 
-function getPostsData(postList) {
-  const arr = []
-  postList.forEach(post => {
-    if (post == "") {
-      return
-    }
-    arr.push(getData(post + ".post"))
-  })
-  //console.log(arr)
-  return arr
+function printResult(text) {
+  //console.log(text)
+  const pre = document.createElement("pre")
+  pre.textContent = text
+  document.body.appendChild(pre)
 }
-
-function printResult(arr) {
-  arr.forEach(el => {
-    if (el != "") {
-      const pre = document.createElement("pre")
-      pre.textContent = el
-      document.body.appendChild(pre)
-    }
-  })
-}
-
